@@ -1,0 +1,5 @@
+{
+  "name": "React Secure Payment Flow",
+  "description": "A simple and elegant payment processing application built with React and Tailwind CSS, demonstrating a complete user flow from initiation to success or failure.",
+  "requestFramePermissions": []
+}
