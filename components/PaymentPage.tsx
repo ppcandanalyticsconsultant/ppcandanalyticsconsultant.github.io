@@ -38,12 +38,12 @@ const PaymentPage: React.FC = () => {
 
       const cardStyle = {
         base: {
-          color: '#1e293b', // slate-900
+          color: '#000000', // black for maximum contrast
           fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
           fontSmoothing: 'antialiased',
           fontSize: '16px',
           '::placeholder': {
-            color: '#94a3b8' // slate-400
+            color: '#64748b' // slate-500 for better placeholder visibility
           }
         },
         invalid: {
@@ -170,7 +170,7 @@ const PaymentPage: React.FC = () => {
                   id="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-slate-900 placeholder-slate-400"
+                  className="w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-black placeholder-slate-500"
                   placeholder="you@example.com"
                   required
                 />
