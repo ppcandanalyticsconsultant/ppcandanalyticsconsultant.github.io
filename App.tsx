@@ -2,8 +2,6 @@
 import React from 'react';
 import { HashRouter, Routes, Route } from 'react-router-dom';
 import HomePage from './components/HomePage';
-import PaymentPage from './components/PaymentPage';
-import SuccessPage from './components/SuccessPage';
 
 function App() {
   return (
@@ -11,8 +9,6 @@ function App() {
       <HashRouter>
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/payment" element={<PaymentPage />} />
-          <Route path="/success" element={<SuccessPage />} />
         </Routes>
       </HashRouter>
     </div>

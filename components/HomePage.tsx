@@ -1,6 +1,5 @@
 
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { CreditCardIcon } from './icons/CreditCardIcon';
 
 const HomePage: React.FC = () => {
@@ -14,12 +13,12 @@ const HomePage: React.FC = () => {
         <p className="text-slate-600 mb-8 text-lg">
           Experience a seamless and secure transaction process. Click below to proceed with your payment.
         </p>
-        <Link
-          to="/payment"
+        <a
+          href="https://buy.stripe.com/test_cNi7sL1J81wRa32aMt7IY00"
           className="inline-block w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-8 rounded-lg text-xl shadow-md hover:shadow-lg transition-transform transform hover:-translate-y-1 duration-300 ease-in-out"
         >
           Start Payment
-        </Link>
+        </a>
       </div>
        <footer className="absolute bottom-4 text-center text-slate-500 text-sm">
         <p>Powered by React & Tailwind CSS</p>
