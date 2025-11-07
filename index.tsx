@@ -4,20 +4,9 @@ import { HashRouter, Routes, Route, Link } from 'react-router-dom';
 
 // --- Icon Components ---
 
-const CreditCardIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    fill="none"
-    viewBox="0 0 24 24"
-    strokeWidth={1.5}
-    stroke="currentColor"
-    {...props}
-  >
-    <path
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5z"
-    />
+const DocumentTextIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" {...props}>
+    <path strokeLinecap="round" strokeLinejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
   </svg>
 );
 
@@ -27,36 +16,131 @@ const HomeIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
     </svg>
 );
 
+const SpinnerIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" {...props}>
+        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+    </svg>
+);
+
+const CheckCircleIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" {...props}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+    </svg>
+);
+
 
 // --- Page Components ---
 
 const HomePage: React.FC = () => {
+  const [cvFile, setCvFile] = useState<File | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [showPopup, setShowPopup] = useState(false);
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      setCvFile(e.target.files[0]);
+    }
+  };
+
+  const handleUpload = () => {
+    if (!cvFile) {
+      alert("Please select a CV to upload.");
+      return;
+    }
+    setIsLoading(true);
+    setTimeout(() => {
+      setIsLoading(false);
+      setShowPopup(true);
+    }, 3000);
+  };
+
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen p-4 pt-16">
-      <div className="w-full max-w-md text-center">
-        <div className="bg-white rounded-full h-24 w-24 flex items-center justify-center mx-auto mb-6 shadow-lg">
-          <CreditCardIcon className="h-12 w-12 text-blue-500" />
+    <>
+      <div className="flex flex-col items-center justify-center min-h-screen p-4 pt-16">
+        <div className="w-full max-w-md text-center">
+          <div className="bg-white rounded-full h-24 w-24 flex items-center justify-center mx-auto mb-6 shadow-lg">
+            <DocumentTextIcon className="h-12 w-12 text-blue-500" />
+          </div>
+          <h1 className="text-4xl md:text-5xl font-bold text-slate-900 mb-4">CV Analysis & Improvement</h1>
+          <p className="text-slate-600 mb-8 text-lg">
+            Upload your CV to get instant feedback and take the next step in your career.
+          </p>
+
+          <div className="space-y-4">
+            <label
+              htmlFor="cv-upload"
+              className="w-full sm:max-w-xs mx-auto bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold py-4 px-6 rounded-lg text-lg shadow-md cursor-pointer transition-colors duration-300 flex items-center justify-center truncate"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mr-3 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" /></svg>
+              <span className="truncate">{cvFile ? cvFile.name : 'Choose your CV'}</span>
+            </label>
+            <input
+              id="cv-upload"
+              type="file"
+              className="hidden"
+              onChange={handleFileChange}
+              accept=".pdf,.doc,.docx"
+            />
+            <button
+              onClick={handleUpload}
+              disabled={!cvFile || isLoading}
+              className="inline-block w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-8 rounded-lg text-xl shadow-md hover:shadow-lg transition-transform transform hover:-translate-y-1 duration-300 ease-in-out disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              Upload and Analyze
+            </button>
+          </div>
         </div>
-        <h1 className="text-4xl md:text-5xl font-bold text-slate-900 mb-4">Secure Payment Gateway</h1>
-        <p className="text-slate-600 mb-8 text-lg">
-          Experience a seamless and secure transaction process. Click below to proceed with your payment.
-        </p>
-        <a
-          href="https://buy.stripe.com/test_cNi7sL1J81wRa32aMt7IY00"
-          className="inline-block w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-8 rounded-lg text-xl shadow-md hover:shadow-lg transition-transform transform hover:-translate-y-1 duration-300 ease-in-out"
-        >
-          Start Payment
-        </a>
-      </div>
-       <footer className="absolute bottom-4 text-center text-slate-500 text-sm">
-        <p>Powered by React & Tailwind CSS</p>
-         <Link to="/contact" className="text-blue-600 hover:underline">
+        <footer className="absolute bottom-4 text-center text-slate-500 text-sm">
+          <p>Powered by React & Tailwind CSS</p>
+          <Link to="/contact" className="text-blue-600 hover:underline">
             Contact Us
-         </Link>
-      </footer>
-    </div>
+          </Link>
+        </footer>
+      </div>
+
+      {isLoading && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <SpinnerIcon className="h-16 w-16 text-white animate-spin" />
+        </div>
+      )}
+
+      {showPopup && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-lg shadow-2xl p-8 max-w-sm w-full text-center">
+            <h2 className="text-2xl font-bold text-slate-900 mb-4">Create Account To Continue</h2>
+            <p className="text-slate-600 mb-6">
+              Your initial analysis is complete. Create an account to view your full report.
+            </p>
+            <a
+              href="https://buy.stripe.com/test_cNi7sL1J81wRa32aMt7IY00"
+              className="inline-block w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg text-lg shadow-md hover:shadow-lg transition-transform transform hover:-translate-y-1 duration-300 ease-in-out"
+            >
+              Proceed to Payment
+            </a>
+          </div>
+        </div>
+      )}
+    </>
   );
 };
+
+const SuccessPage: React.FC = () => (
+    <div className="flex flex-col items-center justify-center min-h-screen p-4">
+      <div className="w-full max-w-lg text-center bg-white p-8 rounded-xl shadow-lg">
+        <CheckCircleIcon className="h-16 w-16 text-green-500 mx-auto mb-4" />
+        <h1 className="text-3xl font-bold text-slate-900 mb-4">Sign-up completed</h1>
+        <div className="bg-slate-100 p-4 rounded-lg text-left">
+          <p className="text-slate-700">
+            Your CV was successfully uploaded. Upon review, we found 3 key areas of improvement; however, for best results we want to get some more information on the jobs you are applying to. Please fill these in below
+          </p>
+        </div>
+         <Link to="/" className="mt-8 inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg shadow-md hover:shadow-lg transition-transform transform hover:-translate-y-1 duration-300 ease-in-out">
+              Back to Home
+          </Link>
+      </div>
+    </div>
+);
 
 const ContactPage: React.FC = () => {
     const [formData, setFormData] = useState({ name: '', email: '', message: '' });
@@ -151,6 +235,7 @@ function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/contact" element={<ContactPage />} />
+          <Route path="/success" element={<SuccessPage />} />
         </Routes>
       </HashRouter>
     </div>
