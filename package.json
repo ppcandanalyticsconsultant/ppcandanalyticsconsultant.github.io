@@ -1,5 +1,5 @@
 {
-  "name": "react-secure-payment-flow",
+  "name": "cv-updater-with-payment-flow",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -9,8 +9,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "react-router-dom": "^7.9.5",
     "react": "^19.2.0",
+    "react-router-dom": "6.23.1",
     "react-dom": "^19.2.0"
   },
   "devDependencies": {
